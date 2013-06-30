@@ -1,7 +1,8 @@
 
-function Movie(title) { this.title = title; }
-function Photo(title) { this.title = title; }
-function Book(title) { this.title = title; }
+counter = 0;
+function Movie(title) { this.title = title; this.counter = counter++ }
+function Photo(title) { this.title = title; this.counter = counter++ }
+function Book(title) { this.title = title; this.counter = counter++ }
 var items = [
 	new Movie('Matrix'),
 	new Book('Atlas Shrugged'),
@@ -41,18 +42,24 @@ var typeMap = typeTemplateMapper([
 
 function renderData(items, typeMap) {
 	var ul = d3.select("ul")
+
 	// has side effects on ul - of course!
-	ul.template()
 	// and it's NOT OPTIONAL! :-) since the DOM is not updated in time..
-	var d = ul.selectAll("li").data(items)
-	var e = d.enter()
+	ul.template()
+	
+	var d = ul.selectAll("li").data(items).ensureType(typeMap)
+	var e = d.enter().cloneFrom(typeMap)
+
 	d.exit().remove()
-	e.cloneFrom(typeMap)
-	d.ensureType(typeMap)
+	
+	//debugger;
+
 	d.select('h2 span').text(res('title'));
+	//d.select('p').text(res('counter'));
 	/*d.sort(function(a, b) {
 		return d3.ascending(a.title, b.title)
 	}).order();*/
+	return d
 }
 renderData(items, typeMap);
 items.shift();

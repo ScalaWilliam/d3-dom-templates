@@ -37,30 +37,39 @@ d3.selection.enter.prototype.cloneFrom = function(selector) {
 		return templateSource.select(selectorValue).node()
 	}
 }
+// binding by key is fine - since a certain key will most certainly
+// have the same kind of type
+// but when we have a numeric key, that's where it gets dirty.
 d3.selection.prototype.ensureType = function(selector) {
-	var parentSelection = d3.select(this.parentNode)
+	var parentNode = this[0].parentNode
+	var parentSelection = d3.select(parentNode)
 	var templateSource = parentSelection.template()
-	return this.select(ensureType)
-	function ensureType() {
-		if ( !this ) {
-			
+	var me = this;
+	this.select(ensureType)
+	return this
+	function replaceNode(selector) {
+		var newNode = templateSource.select(selector).clone().node()
+		if ( this && this.parentNode && this.parentNode === parentNode ) {
+			parentNode.insertBefore(newNode, this)
+			parentNode.removeChild(this)
+		} else {
+			parentNode.appendChild(newNode)
 		}
-
-		var selectorValue = typeof selector === "function" ? selector.apply(this, arguments) : selector
-		var matches = d3.select(this).filter(selectorValue).empty()
-		if ( matches ) return
-
-		var newNode = templateSource.select(selectorValue).clone().node()
-		this.parentNode.appendChild()
-		
-
-
-
-		d3.select(this)
-		var newNode = d3.select(this.parentNode).cloneFrom(selector)
-
-		d3.select(this).remove()
 		return newNode
+	}
+	function selectorValue() {
+		return typeof selector === "function" ? selector.apply(this, arguments) : selector
+	}
+	function ensureType(data, i) {
+		var selector = selectorValue.apply(this, arguments)
+		var matches = !d3.select(this).filter(selector).empty()
+		var node = this
+		if ( !matches ) {
+			node = replaceNode.call(this, selector)
+			node.__data__ = data;
+			me[0][i] = node
+		}
+		return node
 	}
 }
 d3.selection.enter.prototype.cloneInto = function(node) {

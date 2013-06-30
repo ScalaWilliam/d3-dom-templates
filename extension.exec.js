@@ -39,7 +39,8 @@ var typeMap = typeTemplateMapper([
 	{type: Photo, selector: 'li.picture'},
 	{type: Book,  selector: 'li.book'}
 ]);
-
+var iteration = 0
+iterations = ['red', 'green', 'yellow', 'pink']
 function renderData(items, typeMap) {
 	var ul = d3.select("ul")
 
@@ -47,23 +48,26 @@ function renderData(items, typeMap) {
 	// and it's NOT OPTIONAL! :-) since the DOM is not updated in time..
 	ul.template()
 	
-	var d = ul.selectAll("li").data(items).ensureType(typeMap)
+	var d = ul.selectAll("li").data(items, function(d) { return d.title; } ).ensureType(typeMap)
 	var e = d.enter().cloneFrom(typeMap)
+	e.select('p').style('color', 'blue')
 
 	d.exit().remove()
 	
 	//debugger;
 
 	d.select('h2 span').text(res('title'));
-	//d.select('p').text(res('counter'));
-	/*d.sort(function(a, b) {
+	d.select('p').text(res('counter'));
+	d.select('p').transition().duration(5000).style('color', iterations[iteration++])
+	d.sort(function(a, b) {
 		return d3.ascending(a.title, b.title)
-	}).order();*/
+	}).order();
 	return d
 }
 renderData(items, typeMap);
 items.shift();
 items.unshift(new Book('Motherfucker'))
+//items[0].counter = -5
 items.pop();
 items.push(new Movie('trololol'))
 items.push(new Movie('Brololol'))

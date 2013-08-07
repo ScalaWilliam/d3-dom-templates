@@ -1,29 +1,37 @@
+Demo = function(d3) {
+	
+	function res(x) {
+		return function(y) {
+			return y[x]
+		}
+	}
+	function mine(x) {
+		return function() {
+			return this[x]
+		}
+	}
+	function is(a) {
+		return function(x) {
+			return x instanceof a
+		}
+	}
 
+	function Demo() {
+		
+	}
+
+	Demo.Movie = function(title) { this.title = title; this.counter = counter++ }
+	Demo.Book = function(title) { this.title = title; this.counter = counter++ }
+	Demo.Photo = function(title) { this.title = title; this.counter = counter++ }
+
+	
 counter = 0;
-function Movie(title) { this.title = title; this.counter = counter++ }
-function Photo(title) { this.title = title; this.counter = counter++ }
-function Book(title) { this.title = title; this.counter = counter++ }
 var items = [
 	new Movie('Matrix'),
 	new Book('Atlas Shrugged'),
 	new Photo('Virgins'),
 	new Movie('Minority Report')
 ]
-function res(x) {
-	return function(y) {
-		return y[x]
-	}
-}
-function mine(x) {
-	return function() {
-		return this[x]
-	}
-}
-function is(a) {
-	return function(x) {
-		return x instanceof a
-	}
-}
 function typeTemplateMapper(map, def) {
 	return function(data) {
 		for ( var i = 0; i < map.length; i++ ) {
@@ -35,9 +43,9 @@ function typeTemplateMapper(map, def) {
 }
 
 var typeMap = typeTemplateMapper([
-	{type: Movie, selector: 'li.movie'},
-	{type: Photo, selector: 'li.picture'},
-	{type: Book,  selector: 'li.book'}
+	{type: Demo.Movie, selector: 'li.movie'},
+	{type: Demo.Photo, selector: 'li.picture'},
+	{type: Demo.Book,  selector: 'li.book'}
 ]);
 var iteration = 0
 iterations = ['red', 'green', 'yellow', 'pink']
@@ -58,7 +66,7 @@ function renderData(items, typeMap) {
 
 	d.select('h2 span').text(res('title'));
 	d.select('p').text(res('counter'));
-	d.select('p').transition().duration(5000).style('color', iterations[iteration++])
+	d.select('p').transition().duration(5000).style('color', iterations[iteration++ % iterations.length])
 	d.sort(function(a, b) {
 		return d3.ascending(a.title, b.title)
 	}).order();
@@ -71,3 +79,6 @@ items.unshift(new Book('Motherfucker'))
 items.pop();
 items.push(new Movie('trololol'))
 items.push(new Movie('Brololol'))
+	Demo.
+	return Demo;
+}(d3);

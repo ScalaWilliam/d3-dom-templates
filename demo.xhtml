@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>William's client-side DOM Template Animation extensions for D3.JS</title>
+	<script src="d3.v3.js"></script>
+	<script src="extensions.js"></script>
+	<script src="demo.js"></script>
+	<link href="demo.css" type="text/css" rel="stylesheet" title="Main stylesheet"/>
+</head>
+<body onload="(new Demo(window)).begin()">
+<article>
+	<header>
+		<h1>William's client-side DOM Template Animation extensions for D3.JS</h1>
+		<p>
+			The changing background colours are there to prove constancy - that elements aren't all rewritten, unless completely necessary.
+			We could make improvements such as adding a 'hidden' class to our elements --- really depends on your application.
+		</p>
+		<nav><button id="move-around">Move around</button></nav>
+	</header>
+	<ul>
+		<li class="movie">
+			<h2>Movie title: <span>wdq</span></h2>
+			<p><a href="">IMDB</a></p>
+		</li>
+		<li class="picture">
+			<h2>Picture title: <span>xsad</span></h2>
+			<p><a href="">Flickr</a></p>
+		</li>
+		<li class="book">
+			<h2>Book title: <span>xsad</span></h2>
+			<p><a href="">Amazon</a></p>
+		</li>
+		<!--
+		We can have multiple instances of this template because only the first one is picked up.
+		Allows us to template off of as many items as we want.
+		-->
+		<li class="book">
+			<h2>Book title: <span>xsad</span></h2>
+			<p><a href="">AmazonEs</a></p>
+		</li>
+		<li class="book">
+			<h2>Book title: <span>xsad</span></h2>
+			<p><a href="">AmazonEs</a></p>
+		</li>
+		<li class="book">
+			<h2>Book title: <span>xsad</span></h2>
+			<p><a href="">AmazonEs</a></p>
+		</li>
+		<li class="book">
+			<h2>Book title: <span>xsad</span></h2>
+			<p><a href="">AmazonEs</a></p>
+		</li>
+		<li class="book">
+			<h2>Book title: <span>xsad</span></h2>
+			<p><a href="">AmazonEs</a></p>
+		</li>
+	</ul>
+	<footer>
+		<p>Inspired by
+			<a href="http://www.workingsoftware.com.au/page/Your_templating_engine_sucks_and_everything_you_have_ever_written_is_spaghetti_code_yes_you">Your templating engine sucks and everything you have ever written is spaghetti code (yes, you) by <cite>Iain Dooley</cite></a>,
+			<a href="http://d3js.org/">Data Driven Documents by <cite>Mike Bostock</cite></a>,
+			and built by <a href="http://vynar.com/">The Grand Designer <cite>William Narmontas</cite></a>
+		</p>
+	</footer>
+</article>
+</body>
+</html>

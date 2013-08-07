@@ -16,69 +16,81 @@ Demo = function(d3) {
 		}
 	}
 
-	function Demo() {
-		
+	function Demo(window) {
+		d3.select('#move-around').on('click', this.clicker())
+		this.colterationI = 0;
+		this.typeMap = this.typeTemplateMapper([
+			{type: this.Movie, selector: 'li.movie'},
+			{type: this.Photo, selector: 'li.picture'},
+			{type: this.Book,  selector: 'li.book'}
+		]);
+		var a = new this.Movie("The Fountainhead"),
+			b = new this.Book("Atlas Shrugged"),
+			c = new this.Photo("The Big Ben"),
+			d = new this.Movie("Wedding Crashers"),
+			e = new this.Photo("Heron Tower"),
+			f = new this.Book("The Visual Display of Quantitative Information")
+		this.itemsGroups = [
+			[a,b], [a,c,d,f], [a,b,c,d,e], [a,d,e,f], [a,c,b,d,e,f]
+		]
 	}
-
-	Demo.Movie = function(title) { this.title = title; this.counter = counter++ }
-	Demo.Book = function(title) { this.title = title; this.counter = counter++ }
-	Demo.Photo = function(title) { this.title = title; this.counter = counter++ }
-
-	
-counter = 0;
-var items = [
-	new Movie('Matrix'),
-	new Book('Atlas Shrugged'),
-	new Photo('Virgins'),
-	new Movie('Minority Report')
-]
-function typeTemplateMapper(map, def) {
-	return function(data) {
-		for ( var i = 0; i < map.length; i++ ) {
-			if ( is(map[i].type)(data) )
-				return map[i].selector
+	Demo.prototype.begin = function() {
+		this.biteration = 0;
+		return this.iterate()
+	}
+	Demo.prototype.clicker = function() {
+		var me = this
+		return function() {
+			me.iterate()
 		}
-		return def
 	}
-}
+	Demo.prototype.iterate = function() {
+		var itemsGroups = this.itemsGroups
+		this.renderData(itemsGroups[this.biteration++ % itemsGroups.length], this.typeMap)
+	}
+	var counter = 0;
 
-var typeMap = typeTemplateMapper([
-	{type: Demo.Movie, selector: 'li.movie'},
-	{type: Demo.Photo, selector: 'li.picture'},
-	{type: Demo.Book,  selector: 'li.book'}
-]);
-var iteration = 0
-iterations = ['red', 'green', 'yellow', 'pink']
-function renderData(items, typeMap) {
-	var ul = d3.select("ul")
+	Demo.prototype.Movie = function(title) { this.title = title; this.counter = counter++ }
+	Demo.prototype.Book  = function(title) { this.title = title; this.counter = counter++ }
+	Demo.prototype.Photo = function(title) { this.title = title; this.counter = counter++ }
 
-	// has side effects on ul - of course!
-	// and it's NOT OPTIONAL! :-) since the DOM is not updated in time..
-	ul.template()
-	
-	var d = ul.selectAll("li").data(items, function(d) { return d.title; } ).ensureType(typeMap)
-	var e = d.enter().cloneFrom(typeMap)
-	e.select('p').style('color', 'blue')
+	Demo.prototype.colterations = ['red', 'green', 'yellow', 'pink'];
 
-	d.exit().remove()
-	
-	//debugger;
+	Demo.prototype.colterations.call = function(target, number) {
+		return this[number % this.length]
+	}
+	/* Map item types (Movie/Book/Photo) to the template selector */
+	Demo.prototype.typeTemplateMapper = function(map, def) {
+		return function(data) {
+			for ( var i = 0; i < map.length; i++ ) {
+				if ( is(map[i].type)(data) )
+					return map[i].selector
+			}
+			return def
+		}
+	}
 
-	d.select('h2 span').text(res('title'));
-	d.select('p').text(res('counter'));
-	d.select('p').transition().duration(5000).style('color', iterations[iteration++ % iterations.length])
-	d.sort(function(a, b) {
-		return d3.ascending(a.title, b.title)
-	}).order();
-	return d
-}
-renderData(items, typeMap);
-items.shift();
-items.unshift(new Book('Motherfucker'))
-//items[0].counter = -5
-items.pop();
-items.push(new Movie('trololol'))
-items.push(new Movie('Brololol'))
-	Demo.
+	Demo.prototype.renderData = function(items, typeMap) {
+		var ul = d3.select("ul")
+
+		// has side effects on ul - of course!
+		// and it's NOT OPTIONAL! :-) since the DOM is not updated in time..
+		ul.template()
+		
+		var d = ul.selectAll("li").data(items, res('title')).ensureType(typeMap)
+		var e = d.enter().cloneFrom(typeMap)
+		e.select('p').style('color', 'blue')
+
+		d.exit().remove()
+		
+		d.select('h2 span').text(res('title'));
+		d.select('p').text(res('counter'));
+		/* Change colours around to prove that there is the d3 constancy in action. */
+		d.select('p').transition().duration(5000).style('color', this.colterations.call(this.colterationI++))
+		d.sort(function(a, b) {
+			return d3.ascending(a.title, b.title)
+		}).order();
+		return d
+	}
 	return Demo;
 }(d3);

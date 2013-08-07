@@ -22,7 +22,7 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-function WilliamsD3(d3) {
+(function WilliamsD3(d3) {
 
 	d3.selection.prototype.clone = function() {
 		return this.select(cloneNode)
@@ -154,4 +154,4 @@ function WilliamsD3(d3) {
 			return newNode;
 		});
 	}
-}(d3)
+})(d3)

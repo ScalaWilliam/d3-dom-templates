@@ -29,7 +29,7 @@ function Demo(window) {
 		e = new this.Photo("Heron Tower"),
 		f = new this.Book("The Visual Display of Quantitative Information")
 	this.itemsGroups = [
-		[a,b], [a,c,d,f], [a,b,c,d,e], [a,d,e,f], [a,c,b,d,e,f]
+		[a,b], [d,c,a,f], [a,b,e,d,c], [a,d,c,f], [a,c,b,d,e,f]
 	]
 }
 Demo.prototype.createTypeMap = function() {
@@ -92,7 +92,7 @@ Demo.prototype.renderData = function(items, typeMap) {
 	d.exit().remove()
 
 	d.select('h2 span').text(res('title'));
-	d.select('p').text(res('counter'));
+	d.select('div.w').transition(200).style('width', function(data) { return ((1+data.counter) * 30) + 'px' });
 	/* Change colours around to prove that there is the d3 constancy in action. */
 	var colour = this.colterations(this.colterationI++)
 	d.select('p').transition().duration(3000).style('background', colour)

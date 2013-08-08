@@ -12,48 +12,53 @@
 <article>
 	<header>
 		<h1>William's client-side DOM Template Animation extensions for D3.JS</h1>
-		<p>
-			The changing background colours are there to prove constancy - that elements aren't all rewritten, unless completely necessary.
-			We could make improvements such as adding a 'hidden' class to our elements --- really depends on your application.
-		</p>
-		<nav><button id="move-around">Move around</button></nav>
+		<p>This is a technical demo. It will make no sense unless you're familiar with D3 and constancy.</p>
+		<p>In constancy, elements are supposed to be re-used rather than rewritten. This demo shows how constancy is possible in a client-side templating scenario.</p>
+		<p>Different methods could be applied, depending on your specific application.</p>
+		<nav><button id="move-around">Change input items around</button></nav>
 	</header>
 	<ul>
 		<li class="movie">
 			<h2>Movie title: <span>wdq</span></h2>
 			<p><a href="">IMDB</a></p>
+			<div class="w"></div>
 		</li>
 		<li class="picture">
 			<h2>Picture title: <span>xsad</span></h2>
 			<p><a href="">Flickr</a></p>
+			<div class="w"></div>
 		</li>
 		<li class="book">
 			<h2>Book title: <span>xsad</span></h2>
 			<p><a href="">Amazon</a></p>
-		</li>
+<div class="w"></div>		</li>
 		<!--
 		We can have multiple instances of this template because only the first one is picked up.
 		Allows us to template off of as many items as we want.
 		-->
 		<li class="book">
 			<h2>Book title: <span>xsad</span></h2>
+			<p><a href="">Book #3</a></p>
+<div class="w"></div>		</li>
+		<li class="book">
+			<h2>Book title: <span>Book #4</span></h2>
 			<p><a href="">AmazonEs</a></p>
+<div class="w"></div>
 		</li>
 		<li class="book">
-			<h2>Book title: <span>xsad</span></h2>
+			<h2>Book title: <span>Book #5</span></h2>
 			<p><a href="">AmazonEs</a></p>
+<div class="w"></div>
 		</li>
 		<li class="book">
-			<h2>Book title: <span>xsad</span></h2>
+			<h2>Book title: <span>Book #6</span></h2>
 			<p><a href="">AmazonEs</a></p>
+<div class="w"></div>
 		</li>
 		<li class="book">
-			<h2>Book title: <span>xsad</span></h2>
+			<h2>Book title: <span>Book #7</span></h2>
 			<p><a href="">AmazonEs</a></p>
-		</li>
-		<li class="book">
-			<h2>Book title: <span>xsad</span></h2>
-			<p><a href="">AmazonEs</a></p>
+<div class="w"></div>
 		</li>
 	</ul>
 	<footer>
